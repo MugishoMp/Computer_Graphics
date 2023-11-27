@@ -1,0 +1,9 @@
+- **Setup OpenGL and SDL2 Environment**
+   - **Assignment**: Install OpenGL and SDL2 libraries. Create a simple window 
+   using SDL2 and render a basic 2D shape (like a triangle or square) using 
+   OpenGL.
+
+1. Install OpenGL
+2. Install SDL2
+3. Create a simple window using SDL2
+4. Render a basic 2d shape using OpenGL
