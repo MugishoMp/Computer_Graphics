@@ -15,7 +15,8 @@
         {
             "name": "linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/.."
             ],
             "defines": [
                 "_DEBUG",
