@@ -3,12 +3,14 @@
 
 class State {
     public:
+        int width;
+        int height;
         float rotate;
         float offsetX;
         float offsetZ;
         bool quit;
 
-        State() : rotate(0.0f), offsetX(0.0f), offsetZ(0.0f), quit(false) {}
+        State() :  width(620), height(480), rotate(0.0f), offsetX(0.0f), offsetZ(-2.0f), quit(false) {}
 };
 
 #endif 

@@ -13,6 +13,7 @@
 
 #include "state.h"
 #include "window.h"
+#include "mesh.h"
 #include "renderer.h"
 #include "inputhandler.h"
 

@@ -1,13 +1,14 @@
 #include "inputhandler.h"
+#include "errorChecking.h"
 
 
 InputHandler::InputHandler() {
-
+    // nothing to do
 }
 
 
 InputHandler::~InputHandler() {
-
+    // nothing to do
 }
 
 void InputHandler::Update(State &state) {
@@ -20,6 +21,10 @@ void InputHandler::Update(State &state) {
     }
 
     const Uint8 *keyboardState = SDL_GetKeyboardState(NULL);
+    if (keyboardState[SDL_SCANCODE_Q]) {
+        std::cout << "Goodbye!" << std::endl;
+        state.quit = true;
+    }
     if (keyboardState[SDL_SCANCODE_RIGHT]) {
         state.rotate += 0.05f;
         std::cout << "rotation: " << state.rotate << std::endl;

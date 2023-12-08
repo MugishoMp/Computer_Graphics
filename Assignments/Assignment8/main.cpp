@@ -42,7 +42,7 @@ GLuint G_INDEX_BUFFER_OBJECT = 0;
 GLuint G_GRAPHICS_PIPELINE_SHADER_PROGRAM = 0;
 
 float G_U_OFFSET_X = 0.0f;
-float G_U_OFFSET_Z = 0.0f;
+float G_U_OFFSET_Z = -2.0f;
 float G_U_ROTATE   = 0.0f;
 // ^^^^^^^^^^^^^^^^^^^^ Globals                 ^^^^^^^^^^^^^^^^^^^^
 
@@ -115,6 +115,13 @@ void VertexSpecifiation() {
 
     };
 
+    const std::vector<GLuint> indexBufferData {
+        // triangle 1
+        2,0,1,
+        // triangle 2
+        3,2,1
+    };
+
     // now is the question, how do we get this vertex onto 
     // our gpu, in the gpu memory
 
@@ -144,13 +151,6 @@ void VertexSpecifiation() {
                 vertexData.data(),
                 GL_STATIC_DRAW);
 
-
-    const std::vector<GLuint> indexBufferData {
-        // triangle 1
-        2,0,1,
-        // triangle 2
-        3,2,1
-    };
     // setup the index buffer object
     glGenBuffers(1, &G_INDEX_BUFFER_OBJECT);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, G_INDEX_BUFFER_OBJECT);
@@ -175,6 +175,10 @@ void VertexSpecifiation() {
     // or private) attribute to a class that you
     // just made
     // the "height" part of the statement
+
+    glBindVertexArray(0);
+    glBindVertexArray(G_VERTEX_ARRAY_OBJECT);
+
     glEnableVertexAttribArray(0);
     // this is similar to specifying the type of 
     // the attribute 

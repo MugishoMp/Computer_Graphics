@@ -1,4 +1,5 @@
 #include "window.h"
+#include "errorChecking.h"
 
 
 Window::Window(int width, int height, const std::string& title) {

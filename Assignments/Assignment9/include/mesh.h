@@ -1,30 +1,19 @@
-#ifndef MESH
-#define MESH
+#ifndef MESH_H
+#define MESH_H
 
-#include <iostream>
 #include <vector>
-#include <string>
-#include <fstream>
-
-// Third-party library
-#include <SDL2/SDL.h>
-// Include GLAD
 #include <glad/glad.h>
 
-
-#include "state.h"
-
 class Mesh {
-    public:
-        Mesh(const std::vector<float>& vertices, const std::vector<unsigned int>& indices);
-        ~Mesh();
-        void Bind() const;
-        void Unbind() const;
-        // ... other Mesh-related methods
+public:
+    Mesh(const std::vector<float>& vertices, const std::vector<unsigned int>& indices);
+    virtual ~Mesh();
+    virtual void Render() const;
 
-    private:
-        GLuint VAO, VBO, IBO;
-        // ... methods for setting up Meshes
+protected:
+    virtual void Bind() const;
+    virtual void Unbind() const;
+    GLuint VAO, VBO, IBO;
 };
 
-#endif
+#endif // MESH_H
