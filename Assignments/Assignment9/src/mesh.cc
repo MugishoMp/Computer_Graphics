@@ -2,6 +2,8 @@
 #include "errorChecking.h"
 
 Mesh::Mesh(const std::vector<GLfloat>& vertices, const std::vector<GLuint>& indices) {
+    indexCount = indices.size();
+
     // Generate and bind the Vertex Array Object
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
@@ -41,5 +43,5 @@ void Mesh::Unbind() const {
     GLCheck(glBindBuffer(GL_ARRAY_BUFFER, 0);)
 }
 
-void Mesh::Render() const {
+void Mesh::Render(const State &state) const {
 }

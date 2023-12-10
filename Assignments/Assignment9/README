@@ -1,6 +1,17 @@
 - **Setup OpenGL and SDL2 Environment**
    - **Assignment**: Make a square that has blending colors
 
+Step 0:
+
+    Setup project, Create appropriate Classes and functions to get a functional window running
+
+    Render a Traingle, grass in 3d
+
+    Render a square, the field, in 3d space
+
+    Combine the two meshes
+
+    Add ability to change camera and rotate around this field (rotate around the origin)
 
 Step 1: Grass Clusters
 

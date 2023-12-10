@@ -1,6 +1,9 @@
 #include "grassMesh.h"
 #include "errorChecking.h"
+#include "globalVariables.h"
 #include <iostream>
+
+#include <glm/glm.hpp>
 
 GrassMesh::GrassMesh(const std::vector<float>& vertices, const std::vector<unsigned int>& indices)
     : Mesh(vertices, indices) {
@@ -38,11 +41,32 @@ GrassMesh::GrassMesh(const std::vector<float>& vertices, const std::vector<unsig
     );
     
 
+    // Generate and bind instance VBO
+    glGenBuffers(1, &instanceVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
+    // For now, just allocate buffer, data will be updated later
+    glBufferData(GL_ARRAY_BUFFER, sizeof(InstanceData) * 100, nullptr, GL_DYNAMIC_DRAW);
+
+    // Set up instance attribute pointers
+    glEnableVertexAttribArray(3); // Instance position
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(InstanceData), (void*)offsetof(InstanceData, position));
+    glVertexAttribDivisor(3, 1); // Tell OpenGL this is an instanced vertex attribute.
+
+    glEnableVertexAttribArray(4); // Instance rotation
+    glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, sizeof(InstanceData), (void*)offsetof(InstanceData, rotation));
+    glVertexAttribDivisor(4, 1); // Instanced attribute
+
+    glEnableVertexAttribArray(5);
+    glVertexAttribPointer(5, 2, GL_FLOAT, GL_FALSE, sizeof(InstanceData), (void*)offsetof(InstanceData, scale));
+    glVertexAttribDivisor(5, 1); // Instanced attribute
 
     glBindVertexArray(0);
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);
+    glDisableVertexAttribArray(3);
+    glDisableVertexAttribArray(4);
+    glDisableVertexAttribArray(5);
 }
 
 GrassMesh::~GrassMesh() {
@@ -59,15 +83,45 @@ void GrassMesh::Unbind() const {
     // Additional unbind operations specific to GrassMesh
 }
 
-void GrassMesh::Render () const {
-    Mesh::Render();
+void GrassMesh::Render (const State &state) const {
+    // Mesh::Render();
+    // Bind();
+    // // GL_TRIANGLES implies basicaly to sample three elements at a time
+    // GLCheck(glDrawElements(GL_TRIANGLES, 
+    //                 3, 
+    //                 GL_UNSIGNED_INT, 
+    //                 0);)
+    // Unbind();
+    InstanceRender(state);
+}
+
+void GrassMesh::UpdateInstances(const std::vector<InstanceData>& newInstances) {
+    instances = newInstances;
+    glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(InstanceData) * instances.size(), instances.data(), GL_DYNAMIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void GrassMesh::InstanceRender(const State &state) const{
     Bind();
-    // GL_TRIANGLES implies basicaly to sample three elements at a time
-    GLCheck(glDrawElements(GL_TRIANGLES, 
-                    3, 
-                    GL_UNSIGNED_INT, 
-                    0);)
+    std::cout << "instances size: " << instances.size() << std::endl;
+    // sort based on distance from the camera
+    GLCheck(glDrawElementsInstanced(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0, instances.size());)
     Unbind();
+}
+
+void sortInstancesByCameraDistance(std::vector<InstanceData>& instances, const glm::vec3& cameraPosition) {
+    std::sort(instances.begin(), instances.end(), 
+        [&cameraPosition](const InstanceData& a, const InstanceData& b) -> bool {
+            float distA = glm::length(cameraPosition - a.position);
+            float distB = glm::length(cameraPosition - b.position);
+            return distA > distB;  // Sort in descending order of distance
+    });
+}
+
+void GrassMesh::updateInstanceOrder(const State &state) {
+    // Implement wind effect logic
+    sortInstancesByCameraDistance(instances, state.cameraPosition);
 }
 
 void GrassMesh::ApplyWindEffect(float windStrength) {

@@ -1,0 +1,43 @@
+We use worleynoise as a noise function bo basically determine the strenght of the wind at any point in time and space.
+
+we need time 
+   // get the current time
+   float currentTime = SDL_GetTicks();
+
+   // Get the location of the uniform
+   GLint timeUniformLocation = glGetUniformLocation(G_GRAPHICS_PIPELINE_SHADER_PROGRAM, "u_time");
+
+   // Set the uniform
+   glUniform1f(timeUniformLocation, currentTime); // or deltaTime, depending on your use case
+   uniform float u_time;
+
+random noise
+   time uniform needed
+adding a set of points
+calculating the distance
+coloring
+   resolution uniform needed
+   worley2(uv * 2)
+   if we multiply the uv by 2 we create a 2x2 grid of the uv values
+
+animating the points
+   why we do worley2((uv * 2) + (u_time * vec2(0.0, 0.001)));
+
+      In our shader, we're creatively using the Worley noise function to generate a 
+      dynamic pattern that appears to continuously flow upwards. This effect is achieved 
+      by altering the input coordinates to the Worley function based on time. By adding 
+      a small, time-incremented value to the y-component of our texture coordinates (uv), 
+      we simulate the illusion that we're sampling from a point higher up than our actual 
+      position. As time progresses, this addition causes the noise pattern to shift 
+      upwards, creating the effect of motion.
+
+      In essence, we're not physically moving the coordinates of our fragment or texture. 
+      Instead, we're sampling the Worley noise as if we were looking at different, higher 
+      points in an imaginary noise space as time goes by. This gives us the visual effect 
+      of the pattern moving or scrolling upwards, even though the actual coordinates of 
+      our surface remain static."
+
+      This explanation captures the essence of how you're using the time variable and 
+      texture coordinates to create a dynamic, moving noise pattern, without altering the 
+      actual positions of the vertices or fragments on your rendered surface.
+

@@ -1,6 +1,8 @@
 #ifndef H_STATE
 #define H_STATE
 
+#include <glm/vec3.hpp>
+
 class State {
     public:
         int width;
@@ -9,8 +11,9 @@ class State {
         float offsetX;
         float offsetZ;
         bool quit;
+        glm::vec3 cameraPosition;
 
-        State() :  width(620), height(480), rotate(0.0f), offsetX(0.0f), offsetZ(-2.0f), quit(false) {}
+        State() :  width(620), height(480), rotate(0.0f), offsetX(0.0f), offsetZ(-2.0f), quit(false), cameraPosition(glm::vec3(1)) {}
 };
 
 #endif 

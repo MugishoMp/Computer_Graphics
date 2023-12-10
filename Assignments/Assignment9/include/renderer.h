@@ -20,7 +20,7 @@ class Renderer {
         Renderer();
         ~Renderer();
         void PreRender(const State& state) const;
-        void Render(const Mesh& mesh, const Shader& shader, const State &state) const;
+        void Render(const Mesh& mesh, const Shader& shader, State &state) const;
         void CreateGraphicsPipeline();
         // ... other rendering-related methods
 

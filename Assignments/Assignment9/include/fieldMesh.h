@@ -2,6 +2,7 @@
 #define FIELD_MESH_H
 
 #include "mesh.h"
+#include "state.h"
 
 class FieldMesh : public Mesh {
 public:
@@ -9,7 +10,7 @@ public:
     ~FieldMesh() override;
     void Bind() const override;
     void Unbind() const override;
-    void Render() const override;
+    void Render(const State &state) const override;
 
     // Additional methods specific to FieldMesh
 

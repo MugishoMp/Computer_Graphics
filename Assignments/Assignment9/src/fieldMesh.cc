@@ -45,8 +45,8 @@ void FieldMesh::Unbind() const {
     // Additional unbind operations specific to FieldMesh
 }
 
-void FieldMesh::Render () const {
-    Mesh::Render();
+void FieldMesh::Render (const State &state) const {
+    Mesh::Render(state);
     Bind();
     // GL_TRIANGLES implies basicaly to sample three elements at a time
     GLCheck(glDrawElements(GL_TRIANGLES, 
