@@ -19,6 +19,7 @@ uniform float u_time;
 
 out vec3 v_color;
 out vec2 v_texCoord;
+out float v_wind;
 
 float wind;
 float wind_scale = 1.0;
@@ -131,6 +132,7 @@ void main() {
     gl_Position = u_perspective_matrix * viewPosition;
 
     // v_color = color;
+    v_wind = wind;
     v_color = vec3(wind);
     v_texCoord = texCoord;
 }

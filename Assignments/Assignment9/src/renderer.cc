@@ -41,13 +41,17 @@ void setupCamera(const Shader& shader, State &state) {
     }
 
     {
-        // View matrix (assuming a stationary camera)// Camera distance from the center (origin)
+        // View matrix
         float radius = glm::length(glm::vec3(0.0f, 1.0f, state.offsetZ));
-        // Calculate the camera's position using polar coordinates
+        float horizontalAngle = glm::radians(state.rotate); // Horizontal angle (rotate) in radians
+        float verticalAngle = glm::radians(state.offsetY);  // Vertical angle (yOffset) in radians
+
+        // Calculate the camera's position using spherical coordinates
         glm::vec3 cameraPosition;
-        cameraPosition.x = sin(glm::radians(state.rotate)) * radius;
-        cameraPosition.y = 1.0f;  // Keep the camera's height constant
-        cameraPosition.z = cos(glm::radians(state.rotate)) * radius;
+        cameraPosition.x = sin(horizontalAngle) * cos(verticalAngle) * radius;
+        cameraPosition.y = sin(verticalAngle) * radius;  // Adjusted for vertical rotation
+        cameraPosition.z = cos(horizontalAngle) * cos(verticalAngle) * radius;
+
         glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);   // Camera is looking at the origin
         glm::vec3 upDirection = glm::vec3(0.0f, 1.0f, 0.0f);    // 'Up' direction in world space
         glm::mat4 view = glm::lookAt(cameraPosition, cameraTarget, upDirection);

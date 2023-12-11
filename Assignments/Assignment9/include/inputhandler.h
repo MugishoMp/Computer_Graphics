@@ -22,6 +22,9 @@ class InputHandler {
         // ... methods to get input status
 
     private:
+        float lastX;
+        float lastY;
+        bool isDragging;
         // // for mouse dragging
         // float lastX = 400; // 
         // bool isDragging = false;

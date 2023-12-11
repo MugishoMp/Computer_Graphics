@@ -2,8 +2,8 @@
 #include "errorChecking.h"
 
 
-InputHandler::InputHandler() {
-    // nothing to do
+InputHandler::InputHandler() : lastX(0.0f), lastY(0.0f), isDragging(false) {
+    // Initialization code
 }
 
 
@@ -14,10 +14,40 @@ InputHandler::~InputHandler() {
 void InputHandler::Update(State &state) {
     SDL_Event e;
 
-    while(SDL_PollEvent(&e) != 0) {
+    while (SDL_PollEvent(&e) != 0) {
         if (e.type == SDL_QUIT) {
             std::cout << "Goodbye!" << std::endl;
             state.quit = true;
+        }
+        else if (e.type == SDL_MOUSEBUTTONDOWN) {
+            if (e.button.button == SDL_BUTTON_LEFT) { // Left mouse button
+                isDragging = true;
+                lastX = e.motion.x;
+                lastY = e.motion.y;
+            }
+        }
+        else if (e.type == SDL_MOUSEBUTTONUP) {
+            if (e.button.button == SDL_BUTTON_LEFT) {
+                isDragging = false;
+            }
+        }
+        else if (e.type == SDL_MOUSEMOTION) {
+            if (isDragging) {
+                float xoffset = e.motion.x - lastX;
+                lastX = e.motion.x;
+
+                float yoffset = e.motion.y - lastY;
+                lastY = e.motion.y;
+
+                // Adjust sensitivity as needed
+                const float sensitivity = 0.1f;
+                xoffset *= sensitivity;
+                yoffset *= sensitivity;
+
+                state.rotate -= xoffset;
+                state.offsetY += yoffset;
+                std::cout << "rotation: " << state.rotate << std::endl;
+            }
         }
     }
 

@@ -3,6 +3,8 @@
 in vec3 v_color;
 in vec2 v_texCoord;
 
+in float v_wind;
+
 out vec4 color;
 
 
@@ -21,5 +23,6 @@ void main() {
     // #0D2601
     vec4 color_top = vec4(0.275, 0.451, 0.008,1);
     
-    color = vec4(v_color.r, v_color.g, v_color.b, 1.0f);
+    color = mix(color_bottom, color_top, v_texCoord.y - v_wind) * Ambient;
+    // color = vec4(v_color.r, v_color.g, v_color.b, 1.0f);
 }
