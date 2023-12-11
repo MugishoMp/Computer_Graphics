@@ -64,6 +64,13 @@ void setupCamera(const Shader& shader, State &state) {
         shader.SetUniform("u_perspective_matrix", perspective);
     }
 
+    {
+
+        // get the current time: the number of ticks from when sdl was initialized
+        float currentTime = SDL_GetTicks();
+        shader.SetUniform("u_time", currentTime);
+    }
+
 
     // return cameraPosition;
 }

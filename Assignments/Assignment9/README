@@ -54,3 +54,16 @@ Step 6: Additional Effects
     Interaction with Objects/Characters: If you want the grass to react to other objects or characters moving through it, you'll need to implement a way for the grass to respond to these interactions in your shaders.
 
     Environmental Effects: Consider adding environmental effects like rain or varying wind patterns for more realism.
+
+
+
+
+
+
+
+i am using worley noise function to decide where and at what point the grass blade moves
+    a noise function is a mathematical function that generates random or pseudorandom values, often used to
+    introduce randomness or variability in computer graphis, simulations and procedural content generation
+i am using the worley nose to change the color of the grass as it goes down by making use of the uv
+i am using the rodriguez rotation formula to decide in what direction it sways and how much it sways
+i am using instancing to generate multiple grass blades without having a ridiculously large VBO

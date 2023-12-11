@@ -60,6 +60,14 @@ GrassMesh::GrassMesh(const std::vector<float>& vertices, const std::vector<unsig
     glVertexAttribPointer(5, 2, GL_FLOAT, GL_FALSE, sizeof(InstanceData), (void*)offsetof(InstanceData, scale));
     glVertexAttribDivisor(5, 1); // Instanced attribute
 
+    glEnableVertexAttribArray(6);
+    glVertexAttribPointer(6, 1, GL_FLOAT, GL_FALSE, sizeof(InstanceData), (void*)offsetof(InstanceData, sway_pitch));
+    glVertexAttribDivisor(6, 1); // Instanced attribute
+
+    glEnableVertexAttribArray(7);
+    glVertexAttribPointer(7, 1, GL_FLOAT, GL_FALSE, sizeof(InstanceData), (void*)offsetof(InstanceData, sway_yaw));
+    glVertexAttribDivisor(7, 1); // Instanced attribute
+
     glBindVertexArray(0);
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
@@ -67,6 +75,8 @@ GrassMesh::GrassMesh(const std::vector<float>& vertices, const std::vector<unsig
     glDisableVertexAttribArray(3);
     glDisableVertexAttribArray(4);
     glDisableVertexAttribArray(5);
+    glDisableVertexAttribArray(6);
+    glDisableVertexAttribArray(7);
 }
 
 GrassMesh::~GrassMesh() {

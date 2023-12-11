@@ -10,6 +10,8 @@ struct InstanceData {
     glm::vec3 position;
     float rotation;
     glm::vec2 scale;
+    float sway_pitch = 80.0f;
+    float sway_yaw = 45.0f;
 };
 
 class GrassMesh : public Mesh {

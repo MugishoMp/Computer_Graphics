@@ -22,8 +22,8 @@ glm::vec2 generateRandomVec2(float minX, float maxX, float minY, float maxY) {
     return glm::vec2(x, y); // x is always 0
 }
 
-float randomRotationRadians() {
-    return glm::linearRand(0.0f, glm::pi<float>());
+float randomRotationRadians(float minRotation, float maxRotation) {
+    return glm::linearRand(minRotation, maxRotation);
 }
 
 Application::Application() {
@@ -46,11 +46,13 @@ Application::Application() {
             // Generate instance data
             // 10 blades of grass
             std::vector<InstanceData> grassInstances;
-            for (int i = 0; i < 100; ++i) {
+            for (int i = 0; i < 10000; ++i) {
                 InstanceData instance;
                 instance.position = generateRandomPositionXZ(fieldMinX, fieldMaxX, fieldMinZ, fieldMaxZ);
                 instance.scale = generateRandomVec2(bladeMinWidthScale, bladeMaxWidthScale, bladeMinHeightScale, bladeMaxHeightScale);
-                instance.rotation = randomRotationRadians();
+                instance.rotation = randomRotationRadians(0.0f, glm::pi<float>());
+                instance.sway_pitch = randomRotationRadians(65.0f, 75.0f);
+                instance.sway_yaw = randomRotationRadians(40.0f, 50.0f);
                 grassInstances.push_back(instance);
             }
 
