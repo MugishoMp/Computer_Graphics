@@ -1,69 +1,85 @@
-- **Setup OpenGL and SDL2 Environment**
-   - **Assignment**: Make a square that has blending colors
+# Grass Simulation Project
 
-Step 0:
+This project simulates a field of grass using Worley noise and shader techniques. It creates a dynamic and visually appealing grass field that responds to Worley noise patterns.
 
-    Setup project, Create appropriate Classes and functions to get a functional window running
+## How to Run
 
-    Render a Traingle, grass in 3d
+To run this project, follow these steps:
 
-    Render a square, the field, in 3d space
+1. **Install Dependencies:** Make sure you have the following dependencies installed on your system:
 
-    Combine the two meshes
+   - [SDL2](https://www.libsdl.org/): SDL2 is a cross-platform development library designed for 2D and 3D applications. It provides features for window creation, input handling, and more.
 
-    Add ability to change camera and rotate around this field (rotate around the origin)
+   On Linux (Debian-based systems such as Ubuntu), you can use the package manager to install SDL2:
 
-Step 1: Grass Clusters
+   ```bash
+   sudo apt-get install libsdl2-dev
+   ```
 
-   Instance Your Grass: Instead of having just one grass triangle, you'll want to create many instances of this grass. This can be done using instanced rendering in OpenGL. You'll create many copies of the grass triangle across your plane.
+   Other packages that you might potentially want to need
+   
+   ```bash
+   sudo apt-get install freeglut3-dev
+   sudo apt-get install mesa-common-dev
+   sudo apt-get install libglu1-mesa-dev
+   ```
 
-   Randomize Position: Each grass instance should have a slightly different position to give a natural look. You can add randomness to the position within a certain range.
+2. **Header Files (GLAD and GLM):** The header files for GLAD and GLM are already included in the project. You don't need to install them separately. These headers are included to simplify the setup process on Linux machines.
 
-   Vary Size and Rotation: Similarly, slightly vary the size and rotation of each grass instance to add realism.
+3. **Build the Project:** Build the project using the provided build scripts or commands. Building typically involves compiling your code and generating executable files or assets. Check the project documentation for specific build instructions.
 
-Step 2: Basic Animation
+4. **Run:** Execute the project to see the grass simulation in action. Running the project should launch the application and display the grass simulation on your screen. You may need to provide input or configure settings at this stage.
 
-    Vertex Shader: Write a vertex shader that can animate each blade of grass. The vertex shader will be responsible for moving the vertices of the grass mesh.
+Ensure that you have SDL2 correctly installed on your Linux system using the provided installation command. The header files for GLAD and GLM are already included in the project, simplifying the setup process for Linux users.
 
-    Simple Swaying: Start with a simple animation, like having each blade of grass sway back and forth. This can be achieved using a sine wave function based on time, affecting the rotation or position of the grass vertices.
+## Project Overview
 
-Step 3: Wind Simulation
+Here is a detailed overview of the steps involved in creating this grass simulation:
 
-    Wind Direction: Implement a uniform variable in your shader to represent wind direction. This can be a 2D vector that influences the sway of the grass.
+1. **Worley Noise Generation:**
+   - In this step, Worley noise is generated. Worley noise is a type of noise function used to decide where and at what point each grass blade moves within the field.
+   - **Formula:** Worley noise is calculated using a formula that generates pseudo-random patterns in space. It assigns values to points in space based on their proximity to other points. The result is a pattern that resembles cellular or Voronoi patterns.
+   - **Use:** The Worley noise values are used to determine the movement and behavior of individual grass blades. Each point in the Worley noise pattern corresponds to a specific grass blade, and the noise values control attributes like color, position, and sway.
 
-    Wind Strength: Similarly, add a variable for wind strength, affecting how much the grass sways.
+2. **Mesh Creation:**
+   - Two distinct mesh models are created: one representing a single grass blade and another representing the entire grass field.
+   - **Use:** Meshes define the geometry and structure of objects in the 3D scene. The grass blade mesh defines the shape of an individual blade, while the field mesh represents the overall layout of the grass. These meshes serve as the visual representation of the grass in the simulation.
 
-    Noise Function: Introduce a noise function like Perlin or Worley noise to make the wind effect more natural. Worley noise can give a more cellular, varied pattern to the wind's influence on different parts of the grass.
+3. **Shader Usage:**
+   - Separate shaders are implemented for each mesh to control their appearance and behavior.
+   - **Use:** Shaders are programs that run on the GPU and determine how objects are rendered. For this project, shaders are essential for achieving realistic grass rendering. They control aspects such as color, lighting, and movement. By using separate shaders for each mesh, you can fine-tune the visual effects to create a natural and dynamic grass field.
 
-Step 4: Advanced Shader Enhancements
+4. **Instancing:**
+   - Instancing is a technique used to efficiently generate multiple instances of an object with slight variations.
+   - **Use:** Instancing is applied to populate the grass field with numerous blades of grass. Each instance is created with different proportions and initial rotations. This diversity adds realism to the grass field, mimicking the natural variations found in real grass.
 
-    Fragment Shader: Develop your fragment shader to add color and possibly texture to the grass. You can use a simple green gradient or a more complex grass texture.
+5. **Worley Noise in Shaders:**
+   - Worley noise is applied within the shaders to influence both color and movement.
+   - **Use:** In the fragment shader, Worley noise is used to gradually change the color of the grass, creating a visually dynamic effect. In the vertex shader, it controls the movement of the grass blades. The Rodriguez rotation formula is applied to rotate the grass blades based on the Worley noise values. This rotation occurs around the sway yaw and sway pitch, simulating the swaying motion of grass in the wind.
 
-    Lighting: Implement basic lighting in your shader to give depth and realism to the grass.
+6. **Color Adjustment:**
+   - The fragment shader is utilized to adjust the colors, ensuring that the grass appears green and natural.
+   - **Use:** The fragment shader is responsible for fine-tuning the color of the grass. It ensures that the grass blades have a vibrant and natural green color, enhancing the overall visual appeal of the simulation.
 
-Step 5: Optimization
+7. **Increasing Blade Instances:**
+   - To enhance the realism of the simulation, the number of instanced grass blades is increased.
+   - **Use:** Increasing the number of instances results in a denser grass field, making it more visually appealing and lifelike.
 
-    Level of Detail (LOD): Implement LOD to reduce the detail of grass that's further away from the camera.
+8. **Completion:**
+   - At this stage, the grass simulation is complete and ready to run. Users can interact with the simulation to observe the realistic grass movement and colors.
 
-    Culling: Implement frustum culling to avoid rendering grass that's outside the camera's view.
+## Formulas
 
-    Batch Rendering: Optimize your rendering calls to handle the large number of grass instances efficiently.
+In this section, we provide further details on the key formulas used in the project:
 
-Step 6: Additional Effects
+- **Worley Noise Formula:** Worley noise is generated using a formula that calculates the distance between points in space. The formula assigns values to each point based on its proximity to other points, creating a distinctive pattern resembling cells or Voronoi patterns.
 
-    Interaction with Objects/Characters: If you want the grass to react to other objects or characters moving through it, you'll need to implement a way for the grass to respond to these interactions in your shaders.
+- **Rodriguez Rotation Formula:** The Rodriguez rotation formula is applied to rotate grass blades based on the Worley noise values. It performs rotations around the sway yaw and sway pitch, simulating the swaying motion of grass in response to the noise.
 
-    Environmental Effects: Consider adding environmental effects like rain or varying wind patterns for more realism.
+This project combines Worley noise, shaders, and instancing techniques to create an engaging and visually captivating grass field. The incorporation of these elements results in a dynamic and immersive experience for users.
 
+Feel free to customize and further improve upon this project for your specific needs or experiments.
 
+## License
 
-
-
-
-
-i am using worley noise function to decide where and at what point the grass blade moves
-    a noise function is a mathematical function that generates random or pseudorandom values, often used to
-    introduce randomness or variability in computer graphis, simulations and procedural content generation
-i am using the worley nose to change the color of the grass as it goes down by making use of the uv
-i am using the rodriguez rotation formula to decide in what direction it sways and how much it sways
-i am using instancing to generate multiple grass blades without having a ridiculously large VBO
+This project is licensed under the [MIT License](LICENSE).
