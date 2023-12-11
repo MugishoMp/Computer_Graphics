@@ -26,9 +26,17 @@ To run this project, follow these steps:
 
 2. **Header Files (GLAD and GLM):** The header files for GLAD and GLM are already included in the project. You don't need to install them separately. These headers are included to simplify the setup process on Linux machines.
 
-3. **Build the Project:** Build the project using the provided build scripts or commands. Building typically involves compiling your code and generating executable files or assets. Check the project documentation for specific build instructions.
+3. **Build the Project:** Build the project using the provided build scripts or commands. Building typically involves compiling your code and generating executable files or assets. 
 
-4. **Run:** Execute the project to see the grass simulation in action. Running the project should launch the application and display the grass simulation on your screen. You may need to provide input or configure settings at this stage.
+   ```bash
+   make
+   ```
+
+4. **Run:** Execute the project to see the grass simulation in action. Running the project should launch the application and display the grass simulation on your screen. You may need can drag the simulation to move it around
+
+   ```bash
+   ./a.out
+   ```
 
 Ensure that you have SDL2 correctly installed on your Linux system using the provided installation command. The header files for GLAD and GLM are already included in the project, simplifying the setup process for Linux users.
 
